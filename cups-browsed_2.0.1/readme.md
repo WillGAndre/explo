@@ -1,4 +1,5 @@
 ## explo/cups-browsed
+#### CVE-2024-47076, CVE-2024-47175, CVE-2024-47176, CVE-2024-47177
 
 ### Sources
 - [evilsocket/Attacking UNIX Systems via CUPS, Part I](https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/)

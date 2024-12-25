@@ -1,0 +1,4 @@
+[
+  {  "module": "dir_lister"  },
+  {  "module": "get_env_var"  }
+]

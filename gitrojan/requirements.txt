@@ -1,0 +1,2 @@
+python-dotenv
+github3.py==4.0.1

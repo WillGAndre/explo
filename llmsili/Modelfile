@@ -1,0 +1,52 @@
+# - https://github.com/ollama/ollama/blob/main/docs/modelfile.md
+# Requires *.gguf model file or remote pull
+FROM hf.co/ghost-x/ghost-8b-beta-1608-gguf:Q4_0
+
+# SYSTEM PROMPT
+# This defines the default system prompt for the model
+SYSTEM """
+?
+"""
+
+# CONTEXT WINDOW
+# Sets the maximum context size (in tokens) for combined prompt and generation
+# 2048 is a modest size suitable for Mac M1 memory constraints
+# 2048 -> 8GB | 4096 -> 16GB
+PARAMETER num_ctx 4096
+
+# TEMPERATURE
+# Controls randomness: higher values (e.g., 1.0) make output more random,
+# lower values (e.g., 0.1) make output more focused and deterministic
+# 0.7 provides a good balance between creativity and coherence
+PARAMETER temperature 0.7
+
+# TOP-P (NUCLEUS SAMPLING)
+# Limits token selection to a cumulative probability threshold
+# 0.9 means the model only considers tokens in the top 90% probability mass
+# Helps avoid unlikely tokens while maintaining diversity
+PARAMETER top_p 0.9
+
+# TOP-K
+# Limits token selection to the K most likely next tokens
+# 40 is a standard value - higher allows more diversity, lower is more focused
+PARAMETER top_k 40
+
+# MIN-P
+# Filter out low probability tokens
+PARAMETER min_p 0.05
+
+# REPEAT PENALTY
+# Reduces repetition by penalizing tokens that have appeared already
+# Values between 1.1-1.3 provide reasonable repetition prevention
+PARAMETER repeat_penalty 1.2
+
+# Sets how far back for the model to look back to prevent repetition
+PARAMETER repeat_last_n 128
+
+# Number of CPU threads to use
+PARAMETER num_thread 7
+
+# GENERATION PARAMETERS
+# Maximum number of tokens to generate in the response
+# 4096 allows for reasonably long outputs while managing resources
+PARAMETER num_predict 4096

@@ -4,3 +4,5 @@
 - Remote Python Module Importing: [gitrojan](./gitrojan)
 
 - LLM on Silicon (Darwin M1): [llmsili](./llmsili)
+
+- CVE-2025-32433 (pyc): [pyc](./pyc)

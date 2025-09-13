@@ -1,3 +1,6 @@
+_docs/*.md
+*.c2gram
+
 # No recordings
 *.mov
 

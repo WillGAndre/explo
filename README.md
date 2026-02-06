@@ -1,4 +1,6 @@
-## explo/
+### **explo**
+- recon probe (gopherlua): [lock](./lock/)
+
 - Rogue Printer LAN RCE (Ubuntu 22.04): [cups-browsed_2.0.1](cups-browsed_2.0.1)
 
 - Telegram c2c infrastructure: [c2gram](./c2gram/)

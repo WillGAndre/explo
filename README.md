@@ -10,3 +10,9 @@
 - LLM on Silicon (Darwin M1): [llmsili](./llmsili)
 
 - CVE-2025-32433 (pyc): [pyc](./pyc)
+
+---
+
+<br>
+
+*Have ideas or improvements? Open an issue or PR!*

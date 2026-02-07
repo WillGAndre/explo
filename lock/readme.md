@@ -16,13 +16,22 @@
 ⠿⠿⠿⠿⠿⠌⠻⠿⠿⠿⠿⠿⠇⠻⠓⠲⠛⠾⠿⠿⠿⠿⠿⠿⠸⠿⠿⠿⠿⠿
 ```
 
-Lightweight recon probe with encrypted exfil. Lua-based payload, Go loader.
+Non-invasive information gathering. Lua-based payload, Go loader. Based on [gopherlua](https://github.com/yuin/gopher-lua).
 
-## Build
+## build
 
 ```bash
 go build -o lock lock.go
 go build -o decrypt decrypt.go
+```
+
+## lock compilation
+
+```bash
+make -f compile.mk <OS>-<arch>
+# available targets:
+# - linux-amd64 linux-arm64 windows-amd64 (requires: upx)
+# - darwin-arm64
 ```
 
 ## lock usage
@@ -66,6 +75,7 @@ go build -o decrypt decrypt.go
 | `-beacon` | - | Exfil endpoint |
 | `-interval` | 60s | Beacon interval |
 | `-count` | 0 | Iterations (0=∞) |
+| `-jitter` | 25 | Jitter % (0=disabled) |
 | `-key` | - | Encryption key (auto if empty) |
 | `-execute` | - | Base64 Lua payload |
 | `-file` | - | Lua file path |

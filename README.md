@@ -14,5 +14,3 @@
 ---
 
 <br>
-
-*Have ideas or improvements? Open an issue or PR!*
